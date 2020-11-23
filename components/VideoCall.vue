@@ -18,6 +18,16 @@
 <script>
 import io from "socket.io-client";
 export default {
+  data() {
+    return {
+      serverUrl: "http://localhost:5000",
+    };
+  },
+  mounted() {
+    if (!window.location.href.includes("localhost")) {
+      this.serverUrl = "https://nuxt-video-call-server.herokuapp.com";
+    }
+  },
   methods: {
     runtest() {
       // peerConnection
@@ -75,7 +85,7 @@ export default {
 
       // socket
       // start connecion
-      const socket = io.connect("http://localhost:5000");
+      const socket = io.connect(this.serverUrl);
 
       // add users list
       socket.on("add-users", (data) => {
